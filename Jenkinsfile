@@ -2,12 +2,12 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = "naveen04jan/my-python-app3"
-        DOCKER_TAG = "latest"
+        // 1. EDIT: Change this to YOUR Docker Hub username
+        DOCKER_IMAGE = "chandankumar69/my-jenkins-app"
+        DOCKER_TAG = "v1"
     }
 
     stages {
-
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t $DOCKER_IMAGE:$DOCKER_TAG .'
@@ -16,8 +16,10 @@ pipeline {
 
         stage('Login to DockerHub') {
             steps {
+                // 2. EDIT: Change 'dockerhub-credentials' to 'docker-hub-creds' 
+                // (Matches the ID we created in Jenkins)
                 withCredentials([usernamePassword(
-                    credentialsId: 'dockerhub-credentials',
+                    credentialsId: 'docker-hub-creds',
                     usernameVariable: 'USER',
                     passwordVariable: 'PASS'
                 )]) {
